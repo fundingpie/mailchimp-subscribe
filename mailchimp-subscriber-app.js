@@ -12,6 +12,17 @@ app.post('/subscribe', function(req, res) {
   var borrowerListId = "c5764a3674";
   var type = req.query.type;
   var listId;
+  var nameParts = req.body.name ? req.body.name.trim().split(" ") : [];
+  var firstName;
+  var lastName;
+
+  if (nameParts.length > 1) {
+    firstName = nameParts[0];
+    lastName = nameParts[1];
+  }
+  else if (nameParts.length == 1) {
+    firstName = nameParts[0];
+  }
 
   if (type == "investor") {
     listId = investorListId;
@@ -23,7 +34,7 @@ app.post('/subscribe', function(req, res) {
   console.log("type:", type);
   console.log("body", req.body);
 
-  mc.lists.subscribe({id:listId, email:{email:req.body.email}}, function(result) {
+  mc.lists.subscribe({id:listId, email:{email:req.body.email}, merge_vars:{fname:firstName, lname:lastName}}, function(result) {
     res.send('subscribed');
   },
   function(error) {
