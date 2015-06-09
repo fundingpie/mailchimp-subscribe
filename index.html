@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="bootstrap.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <form id="subscribe" class="" action="/subscribe?type=investor" method="post">
+      <input type="text" placeholder="Name" name="name"/>
+      <input type="text" placeholder="Email" name="email"/>
+      <input type="submit"></input>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Thank you for keeping in touch</h4>
+          </div>
+          <div class="modal-body">
+            You will receive an email to confirm you subscription shortly.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="jquery.min.js" charset="utf-8"></script>
+    <script src="bootstrap.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('#subscribe').submit(function(e) {
+          e.preventDefault();
+
+          console.log($(this))
+
+          $.post(
+            "subscribe?type=investor",
+            $(this).serialize(),
+            function(data) {
+              $('#myModal').modal('show')
+            });
+        });
+      });
+    </script>
+
+  </body>
+
+
+</html>

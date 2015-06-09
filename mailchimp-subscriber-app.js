@@ -5,7 +5,6 @@ var mcapi = require('mailchimp-api/mailchimp');
 var mc = new mcapi.Mailchimp("9ed0f65ebf0fd9f8ea833df450c744ab-us11");
 
 app.use(bodyParser.urlencoded({extended:true}));
-
 app.use("/", express.static(__dirname));
 
 app.post('/subscribe', function(req, res) {
@@ -15,23 +14,23 @@ app.post('/subscribe', function(req, res) {
   var listId;
 
   if (type == "investor") {
-    list = investorListId;
+    listId = investorListId;
   }
   else if (type == "borrower") {
-    list = borrowerListId;
+    listId = borrowerListId;
   }
-  
+
   console.log("type:", type);
   console.log("body", req.body);
 
-  // mc.lists.subscribe({id:borrowerListId, email:{email:req.body.email}}, function(result) {
-  //   console.log("success: ", result);
-  // },
-  // function(error) {
-  //   console.log('error:', error);
-  // });
+  mc.lists.subscribe({id:listId, email:{email:req.body.email}}, function(result) {
+    res.send('subscribed');
+  },
+  function(error) {
+    res.status(500).send(error.error);
+  });
 
-  res.send('subscribed');
+
 });
 
 var server = app.listen(3000, function () {
