@@ -34,7 +34,7 @@ app.post('/subscribe', function(req, res) {
   console.log("type:", type);
   console.log("body", req.body);
 
-  mc.lists.subscribe({id:listId, email:{email:req.body.email}, merge_vars:{fname:firstName, lname:lastName}}, function(result) {
+  mc.lists.subscribe({id:listId, email:{email:req.body.email}, merge_vars:{fname:firstName, lname:lastName, phone:req.body.phone}}, function(result) {
     res.send('subscribed');
   },
   function(error) {
